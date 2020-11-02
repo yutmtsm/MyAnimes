@@ -64,13 +64,17 @@
                                 <a class="nav-link" href="#">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Follow</a>
+                                <a class="nav-link" href="{{ url('users/' .auth()->user()->id) }}">Follow</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Find Anime</a>
                             </li>
                             <li class="nav-item">
+                                @if(auth()->user()->profile_image === null)
+                                <img src="/images/noimage.png" class="rounded-circle" width="40" height="40">
+                                @else
                                 <img src="{{ asset('storage/profile_image/' .auth()->user()->profile_image) }}" class="rounded-circle" width="40" height="40">
+                                @endif
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
