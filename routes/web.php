@@ -13,12 +13,15 @@
 
 Auth::routes();
 
-Route::get('/', 'AnimesController@top')->name('home');
+Route::get('/', 'AnimesController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/index', 'UsersController@index')->name('home');
 
 // ログイン状態
 Route::group(['middleware' => 'auth'], function() {
+    
+    // アニメ関連
+    Route::resource('animes', 'AnimesController', ['only' => ['create', 'store', 'show', 'edit', 'update']]);
     
     // ユーザ関連
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);

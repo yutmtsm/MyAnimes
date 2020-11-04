@@ -83,6 +83,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a href="{{ url('users/' .auth()->user()->id) }}" class="dropdown-item">プロフィール</a>
                                     <a href="{{ url('tweets/create') }}" class="dropdown-item">ツイートする</a>
+                                    <a href="{{ url('animes/create') }}" class="dropdown-item">ツイートする</a>
                                     <a href="{{ route('logout') }}" class="dropdown-item"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">

@@ -14,9 +14,11 @@ class CreateAnimesTable extends Migration
     public function up()
     {
         Schema::create('animes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('title')->comment('タイトル');
-            $table->
+            $table->string('text')->comment('本文');
+            $table->string('status')->comment('状態');
+            $table->string('anime_image')->nullable()->comment('アニメの画像');
             $table->timestamps();
         });
     }
