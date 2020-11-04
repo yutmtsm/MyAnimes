@@ -16,6 +16,12 @@ class Anime extends Model
         return $this->belongsTo(User::class);
     }
     
+    // 自分のアニメ情報の取得
+    public function getAllMyanimes(Int $user_id)
+    {
+        return $this->where('user_id', $user_id)->paginate(10);
+    }
+    
     // アニメ情報の保存
     public function animeStore(Int $user_id, Array $data)
     {

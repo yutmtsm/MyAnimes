@@ -17,10 +17,11 @@ class AnimesController extends Controller
      */
     public function index(Anime $anime)
     {
-        // $all_animes = $anime->getAllAnimes()->paginate(10);
-        
+        $user = auth()->user();
+        $all_animes = $anime->getAllMyanimes($user->id);
+        // dd($all_animes);
         return view('animes.index', [
-            
+            'all_animes' => $all_animes
         ]);
     }
 
