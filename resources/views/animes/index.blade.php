@@ -29,18 +29,16 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
           </ol>
           <div class="carousel-inner" role="listbox">
-            @foreach($all_animes as $all_anime)
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="{{ asset('storage/animes/' .$all_anime->anime_image) }}" alt="First slide">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
             </div>
-            @endforeach
-          <!--  <div class="carousel-item">-->
-          <!--    <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">-->
-          <!--  </div>-->
-          <!--  <div class="carousel-item">-->
-          <!--    <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">-->
-          <!--  </div>-->
-          <!--</div>-->
+            <div class="carousel-item">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+            </div>
+          </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -52,102 +50,25 @@
         </div>
 
         <div class="row">
-
+          @foreach($all_animes as $all_anime)
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <a href="#"><img class="card-img-top" src="{{ asset('storage/animes/' .$all_anime->anime_image) }}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">Item One</a>
+                  <a href="#">{{ $all_anime->title }}</a>
                 </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                
+                <p class="card-text">{{ $all_anime->text }}</p>
               </div>
               <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <small class="text-muted">Status : {{ $all_anime->status }}<br></small>
+                <small class="text-muted">おすすめ : &#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Two</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Three</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Four</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Five</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Six</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+          @endforeach
+          
 
         </div>
         <!-- /.row -->
