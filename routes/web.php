@@ -20,23 +20,24 @@ Route::get('/index', 'UsersController@index')->name('home');
 // ログイン状態
 Route::group(['middleware' => 'auth'], function() {
     
+    
     // アニメ関連
-    Route::resource('animes', 'AnimesController', ['only' => 'create', 'store', 'show', 'edit', 'update']);
+    Route::resource('animes', 'Admin\AnimesController', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update']]);
     
     // ユーザ関連
-    Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
+    Route::resource('users', 'Admin\UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
 
     // フォロー/フォロー解除を追加
-    Route::post('users/{user}/follow', 'UsersController@follow')->name('follow');
-    Route::delete('users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow');
+    Route::post('users/{user}/follow', 'Admin\UsersController@follow')->name('follow');
+    Route::delete('users/{user}/unfollow', 'Admin\UsersController@unfollow')->name('unfollow');
 
     // ツイート関連
-    Route::resource('tweets', 'TweetsController', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
+    Route::resource('tweets', 'Admin\TweetsController', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
     
     // コメント関連
-    Route::resource('comments', 'CommentsController', ['only' => ['store']]);
+    Route::resource('comments', 'Admin\CommentsController', ['only' => ['store']]);
     
     // いいね関連
-    Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destroy']]);
+    Route::resource('favorites', 'Admin\FavoritesController', ['only' => ['store', 'destroy']]);
 
 });

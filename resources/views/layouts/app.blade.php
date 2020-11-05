@@ -33,7 +33,7 @@
                     <ul class="navbar-nav ml-auto">
                         @guest
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">TOP
+                                <a class="nav-link" href="{{ url('/') }}">TOP
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -56,7 +56,7 @@
                             @endif
                         @else
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('/') }}">MyPage
+                                <a class="nav-link" href="{{ url('/animes') }}">MyPage
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>

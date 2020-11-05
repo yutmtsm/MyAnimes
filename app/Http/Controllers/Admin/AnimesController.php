@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +18,7 @@ class AnimesController extends Controller
     public function index(Anime $anime)
     {
         $user = auth()->user();
-        $all_animes = $anime->getAllAnimes();
+        $all_animes = $anime->getAllMyanimes($user->id);
         // dd($all_animes);
         return view('animes.index', [
             'all_animes' => $all_animes

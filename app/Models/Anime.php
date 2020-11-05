@@ -8,12 +8,18 @@ class Anime extends Model
 {
     //
     protected $fillable = [
-        'title', 'title', 'status', 'anime_image'
+        'title', 'title', 'status', 'anime_image', 'recommend'
     ];
     
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    // アニメ情報の取得
+    public function getAllAnimes()
+    {
+        return $this::get();
     }
     
     // 自分のアニメ情報の取得
@@ -31,6 +37,7 @@ class Anime extends Model
         $this->title = $data['title'];
         $this->text = $data['text'];
         $this->status = $data['status'];
+        $this->recommend = $data['recommend'];
         
         $this->save();
 

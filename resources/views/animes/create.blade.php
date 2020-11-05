@@ -76,6 +76,28 @@
                             </div>
                         </div>
                         
+                        <!-- おすすめ度 -->
+                        <div class="form-group">
+                            <label for="recommend" class=" col-form-label text-md-right">{{ __('Recommend') }}</label>
+
+                            <div class="">
+                                <select name="recommend" class="form-control">
+                                    <option value="">おすすめ度の選択</option>
+                                    <option value="1">&#9733; &#9734; &#9734; &#9734; &#9734;</option>
+                                    <option value="2">&#9733; &#9733; &#9734; &#9734; &#9734;</option>
+                                    <option value="3">&#9733; &#9733; &#9733; &#9734; &#9734;</option>
+                                    <option value="4">&#9733; &#9733; &#9733; &#9733; &#9734;</option>
+                                    <option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
+                                </select>
+
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
                         <!-- アニメの画像 -->
                         <div class="form-group">
                             <label for="image" class="col-form-label text-md-right">{{ __('Image') }}</label>
