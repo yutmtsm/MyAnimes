@@ -8,91 +8,132 @@
                 <div class="card-header">Update</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ url('users/' .$user->id) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ url('animes/' .$anime->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                        
+                        @if (count($errors) > 0)
+                        <ul>
+                            @foreach($errors->all() as $e)
+                                <li>{{ $e }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
 
-                        <div class="form-group row align-items-center">
-                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Profile Image') }}</label>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 p-3 w-100 d-flex">
+                                <img src="{{ asset('storage/profile_image/' .$user->profile_image) }}" class="rounded-circle" width="50" height="50">
+                                <div class="ml-2 d-flex flex-column">
+                                    <p class="mb-0">{{ $user->name }}</p>
+                                    <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_name }}</a>
+                                </div>
+                            </div>
+                        </div>
 
-                            <div class="col-md-6 d-flex align-items-center">
-                                @if($user->profile_image == null)
+                        <!-- タイトル -->
+                        <div class="form-group">
+                            <label for="title" class=" col-form-label text-md-right">{{ __('Title') }}</label>
+
+                            <div class="">
+                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') ? : $anime->title }}" required autocomplete="title" autofocus>
+
+                                @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <!-- コメント入力 -->
+                        <div class="form-group">
+                            <label for="text" class=" col-form-label text-md-right">{{ __('Text') }}</label>
+                            
+                            <div class="">
+                                <textarea class="form-control @error('text') is-invalid @enderror" name="text" required autocomplete="text" rows="4">{{ old('text') ? : $anime->text  }}</textarea>
+
+                                @error('text')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <p class="mb-4 text-danger">200文字以内</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 状態 -->
+                        <div class="form-group">
+                            <label for="status" class=" col-form-label text-md-right">{{ __('Status') }}</label>
+
+                            <div class="">
+                                <select name="status" class="form-control">
+                                    <option value="{{ old('status') ? : $anime->status  }}">{{ $anime->status }}</option>
+                                    <option value="見たい">見たい</option>
+                                    <option value="見てる">見てる</option>
+                                    <option value="見た">見た</option>
+                                    <option value="一時中断">一時中断</option>
+                                    <option value="途中放棄">途中放棄</option>
+                                </select>
+
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <!-- おすすめ度 -->
+                        <div class="form-group">
+                            <label for="recommend" class=" col-form-label text-md-right">{{ __('Recommend') }}</label>
+
+                            <div class="">
+                                <select name="recommend" class="form-control">
+                                    <option value="{{ old('recommend') ? : $anime->recommend  }}">
+                                        @if($anime->recommend == 1)
+                                        <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+                                        @elseif($anime->recommend == 2)
+                                        <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+                                        @elseif($anime->recommend == 3)
+                                        <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+                                        @elseif($anime->recommend == 4)
+                                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                        @else
+                                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                                        @endif
+                                    </option>
+                                    <option value="1">&#9733; &#9734; &#9734; &#9734; &#9734;</option>
+                                    <option value="2">&#9733; &#9733; &#9734; &#9734; &#9734;</option>
+                                    <option value="3">&#9733; &#9733; &#9733; &#9734; &#9734;</option>
+                                    <option value="4">&#9733; &#9733; &#9733; &#9733; &#9734;</option>
+                                    <option value="5">&#9733; &#9733; &#9733; &#9733; &#9733;</option>
+                                </select>
+
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <!-- アニメの画像 -->
+                        <div class="form-group">
+                            <label for="image" class="col-form-label text-md-right">{{ __('Image') }}</label>
+
+                            <div class="">
+                                <p>選択中の画像</p>
+                                @if($anime->anime_image == null)
                                 <img src="/images/noimage.png" class="rounded-circle" width="80" height="80" alt="profile_image">
                                 @else
-                                <img src="{{ asset('storage/profile_image/' .$user->profile_image) }}" class="rounded-circle" width="80" height="80" alt="profile_image">
+                                <img src="{{ asset('storage/animes/' .$anime->anime_image) }}" class="rounded-circle" width="80" height="80" alt="profile_image">
                                 @endif
-                                <input type="file" name="image" class="@error('image') is-invalid @enderror" autocomplete="image">
+                                
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
 
-                                @error('image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="screen_name" class="col-md-4 col-form-label text-md-right">{{ __('Account Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="screen_name" type="text" class="form-control @error('screen_name') is-invalid @enderror" name="screen_name" value="{{ $user->screen_name }}" required autocomplete="screen_name" autofocus readonly>
-                                @error('screen_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ $user->gender }}" required autocomplete="gender" autofocus readonly>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row">
-                            <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="age" type="text" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ $user->age }}" required autocomplete="age" autofocus>
-
-                                @error('name')
+                                @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -102,7 +143,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                <input type="hidden" name="id" value="{{ $anime->id }}">
                                 <button type="submit" class="btn btn-primary">更新する</button>
                             </div>
                         </div>

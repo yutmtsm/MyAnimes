@@ -20,7 +20,7 @@ class AnimesController extends Controller
         $user = auth()->user();
         $all_animes = $anime->getAllAnimes();
         // dd($all_animes);
-        return view('animes.index', [
+        return view('index', [
             'all_animes' => $all_animes
         ]);
     }

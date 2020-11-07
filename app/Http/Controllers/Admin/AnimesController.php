@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Anime;
 
 class AnimesController extends Controller
@@ -90,9 +91,14 @@ class AnimesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Anime $anime)
     {
-        //
+        $user = User::find($anime->user_id);
+        // dd($user);
+        return view('animes.edit', [
+            'user' => $user,
+            'anime' => $anime
+        ]);
     }
 
     /**
@@ -102,9 +108,36 @@ class AnimesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $anime = Anime::find($request->id);
+        $form = $request->all();
+        
+        $validator = Validator::make($form, [
+            'titlw'         => ['string', 'max:30'],
+            'text'          => ['required', 'string', 'max:200'],
+            'status'        => ['required', 'string', 'max:255'],
+            'recommend'     => ['required'],
+            'image' => ['file', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
+        ]);
+        $validator->validate();
+        
+        // 画像の判定処理
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('public/animes');
+            $form['anime_image'] = basename($path);
+            // $path = Storage::disk('s3')->putFile('/profile_image',$form['image'],'public');
+            // $news->image_path = Storage::disk('s3')->url($path);
+        } else {
+            $form['anime_image'] = $anime->anime_image;;
+        }
+        
+        unset($form['_token']);
+        unset($form['image']);
+        
+        $anime->fill($form)->save();
+        
+        return redirect('animes/');
     }
 
     /**
@@ -115,6 +148,6 @@ class AnimesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //d
     }
 }

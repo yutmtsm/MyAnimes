@@ -11,7 +11,7 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">Shop Name</h1>
+        <h1 class="my-4"> 俺のアニメ</h1>
         <div class="list-group">
           <a href="#" class="list-group-item">Category 1</a>
           <a href="#" class="list-group-item">Category 2</a>
@@ -73,6 +73,9 @@
                 <small class="text-muted">おすすめ : &#9733; &#9733; &#9733; &#9733; &#9734;</small>
                 @else
                 <small class="text-muted">おすすめ : &#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                @endif
+                @if ($all_anime->user_id === Auth::user()->id)
+                  <a href="{{ url('animes/' .$all_anime->id .'/edit') }}" class="btn btn-primary">アニメ情報の編集</a>
                 @endif
               </div>
             </div>

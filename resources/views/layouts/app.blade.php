@@ -61,10 +61,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('users/' .auth()->user()->id) }}">Follow</a>
+                                <a class="nav-link" href="{{ url('users/' .auth()->user()->id) }}">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Find Anime</a>
