@@ -62,16 +62,16 @@
                 </div>
             </div>
         </div>
-        
+
         <div class=" col-md-8 mb-3">
             <ul class="nav nav-tabs">
                 <li><a class="nav-link active" data-toggle="tab" href="#following">フォロー</a></li>
                 <li><a class="nav-link" data-toggle="tab" href="#followed">フォロワー</a></li>
                 <li><a class="nav-link" data-toggle="tab" href="#tweets">投稿一覧</a></li>
             </ul>
-            
+
             <div class="tab-content">
-                <div id="following" class="tab-pane fade in active">
+                <div id="following" class="tab-pane active">
                     @if (isset($following_Users))
                         @foreach($following_Users as $following_User)
                             <div class="card">
@@ -83,15 +83,15 @@
                                     @endif
                                     <div class="ml-2 d-flex flex-column">
                                         <p class="mb-0">{{ $following_User->name }}</p>
-                                        <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $following_User->screen_name }}</a>
+                                        <a href="{{ url('users/' .$following_User->id) }}" class="text-secondary">{{ $following_User->screen_name }}</a>
                                     </div>
-                                
+
                                     @if(auth()->user()->isFollowed($following_User->id))
                                     <div class="px-2">
                                         <span class="px-1 bg-secondary text-light">フォローされています</span>
                                     </div>
                                     @endif
-                                
+
                                     <div class="d-flex justify-content-end flex-grow-1">
                                         @if (auth()->user()->isFollowing($following_User->id))
                                         <form action="{{ route('unfollow', ['id' => $following_User->id]) }}" method="POST">
@@ -111,7 +111,7 @@
                         @endforeach
                     @endif
                 </div>
-                <div id="followed" class="tab-pane fade">
+                <div id="followed" class="tab-pane">
                     @if (isset($followed_Users))
                         @foreach($followed_Users as $followed_User)
                             <div class="card">
@@ -123,15 +123,15 @@
                                     @endif
                                     <div class="ml-2 d-flex flex-column">
                                         <p class="mb-0">{{ $followed_User->name }}</p>
-                                        <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $followed_User->screen_name }}</a>
+                                        <a href="{{ url('users/' .$followed_User->id) }}" class="text-secondary">{{ $followed_User->screen_name }}</a>
                                     </div>
-                                
+
                                     @if(auth()->user()->isFollowed($followed_User->id))
                                     <div class="px-2">
                                         <span class="px-1 bg-secondary text-light">フォローされています</span>
                                     </div>
                                     @endif
-                                
+
                                     <div class="d-flex justify-content-end flex-grow-1">
                                         @if (auth()->user()->isFollowing($followed_User->id))
                                         <form action="{{ route('unfollow', ['id' => $followed_User->id]) }}" method="POST">
@@ -151,8 +151,8 @@
                         @endforeach
                     @endif
                 </div>
-                
-                <div id="tweets" class="tab-pane fade">
+
+                <div id="tweets" class="tab-pane">
                     @if (isset($timelines))
                         @foreach ($timelines as $timeline)
                             <div class="card">
@@ -183,7 +183,7 @@
                                                 <form method="POST" action="{{ url('tweets/' .$timeline->id) }}" class="mb-0">
                                                     @csrf
                                                     @method('DELETE')
-            
+
                                                     <a href="{{ url('tweets/' .$timeline->id .'/edit') }}" class="dropdown-item">編集</a>
                                                     <button type="submit" class="dropdown-item del-btn">削除</button>
                                                 </form>
@@ -204,10 +204,10 @@
                     @endif
                 </div>
             </div>
-                
+
         </div>
-        
-                    
+
+
     </div>
     <div class="my-4 d-flex justify-content-center">
         {{ $timelines->links() }}
