@@ -42,7 +42,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function updateProfile(Array $params)
     {
         if (isset($params['profile_image'])) {
@@ -65,12 +65,12 @@ class User extends Authenticatable
                     'age'          => $params['age'],
                     'gender'          => $params['gender'],
                     'email'         => $params['email'],
-                ]); 
+                ]);
         }
 
         return;
     }
-    
+
     // リレーションの親子関係
     public function followers()
     {
@@ -81,31 +81,31 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(self::class, 'followers', 'following_id', 'followed_id');
     }
-    
+
     // 全てのユーザー（ログイン者以外）を取得する
     public function getAllUsers(Int $user_id)
     {
-        return $this->Where('id', '<>', $user_id)->paginate(5);
+        return $this->Where('id', '<>', $user_id)->paginate(10);
     }
-    
+
     // フォローする
     public function follow(Int $user_id)
     {
         return $this->follows()->attach($user_id);
     }
-    
+
     // フォロー解除する
     public function unfollow(Int $user_id)
     {
         return $this->follows()->detach($user_id);
     }
-    
+
     // フォローしているか
     public function isFollowing(Int $user_id)
     {
         return (boolean) $this->follows()->where('followed_id', $user_id)->first(['id']);
     }
-    
+
     // フォローされているのか
     public function isFollowed(Int $user_id)
     {
