@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 
 class TagController extends Controller
 {
+    
+    public function add()
+    {
+        
+    }
     /**
      * Display a listing of the resource.
      *

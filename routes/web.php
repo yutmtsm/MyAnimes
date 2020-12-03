@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function() {
     
     // アニメ関連
     Route::resource('animes', 'Admin\AnimesController', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update']]);
+    Route::post('animes', 'Admin\TagController@add');
     
     // ユーザ関連
     Route::resource('users', 'Admin\UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
