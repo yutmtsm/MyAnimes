@@ -15,6 +15,11 @@ class Anime extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
     // アニメ情報の取得
     public function getAllAnimes()

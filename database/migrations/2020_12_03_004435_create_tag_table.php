@@ -15,6 +15,9 @@ class CreateTagTable extends Migration
     {
         Schema::create('tag', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('user_id')->comment('ユーザーIDと紐付け');
+            $table->unsignedInteger('animes_id')->comment('投稿したアニメのIDと紐付け');
+            $table->string('tag_name')->comment('タグ名');
             $table->timestamps();
         });
     }
