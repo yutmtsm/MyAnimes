@@ -26,7 +26,7 @@ class UsersController extends Controller
             'all_users'=> $all_users
         ]);
     }
-    
+
     // フォロー
     public function follow(User $user)
     {
@@ -40,7 +40,7 @@ class UsersController extends Controller
             return back();
         }
     }
-    
+
     // フォロー解除
     public function unfollow(User $user)
     {
@@ -86,6 +86,7 @@ class UsersController extends Controller
     {
         // dd($user);
         $login_user = auth()->user();
+        $all_users = $user->getAllUsers(auth()->user()->id);
         $is_following = $login_user->isFollowing($user->id);
         $is_followed = $login_user->isFollowed($user->id);
         $timelines = $tweet->getUserTimeLne($user->id);
@@ -97,9 +98,10 @@ class UsersController extends Controller
         $followed_Users = $user->find($followed_User_Ids);
         $follow_count = $follower->getFollowCount($user->id);
         $follower_count = $follower->getFollowerCount($user->id);
-        
+
         return view('users.show', [
             'user'            => $user,
+            'all_users'       => $all_users,
             'is_following'    => $is_following,
             'is_followed'     => $is_followed,
             'timelines'       => $timelines,
@@ -134,7 +136,7 @@ class UsersController extends Controller
         // dd($request);
         $user = User::find($request->id);
         $form = $request->all();
-        
+
         $validator = Validator::make($form, [
             'name'          => ['required', 'string', 'max:255'],
             'age'          => ['required', 'numeric', 'max:255'],
@@ -143,7 +145,7 @@ class UsersController extends Controller
             'email'         => ['required', 'string', 'email', 'max:255']
         ]);
         $validator->validate();
-        
+
         // 画像の判定処理
         if ($request->file('image')) {
             $path = $request->file('image')->store('public/profile_image');
@@ -153,12 +155,12 @@ class UsersController extends Controller
         } else {
             $form['profile_image'] = $user->profile_image;;
         }
-        
+
         unset($form['_token']);
         unset($form['image']);
-        
+
         $user->fill($form)->save();
-        
+
         return redirect('users/' .auth()->user()->id);
     }
 

@@ -53,12 +53,16 @@
           @foreach($all_animes as $all_anime)
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="{{ asset('storage/animes/' .$all_anime->anime_image) }}" alt=""></a>
+              @if($all_anime->anime_image == null)
+              <img class="card-img-top" src="/images/noimage.png" alt="">
+              @else
+              <img class="card-img-top" src="{{ asset('storage/animes/' .$all_anime->anime_image) }}" alt="">
+              @endif
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#">{{ $all_anime->title }}</a>
                 </h4>
-                
+
                 <p class="card-text">{{ $all_anime->text }}</p>
               </div>
               <div class="card-footer">
@@ -81,8 +85,9 @@
             </div>
           </div>
           @endforeach
-          
-
+        </div>
+        <div class="my-4 d-md-flex justify-content-center">
+          {{ $all_animes->links() }}
         </div>
         <!-- /.row -->
 

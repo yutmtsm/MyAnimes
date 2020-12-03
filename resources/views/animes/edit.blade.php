@@ -11,7 +11,7 @@
                     <form method="post" action="{{ url('animes/' .$anime->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        
+
                         @if (count($errors) > 0)
                         <ul>
                             @foreach($errors->all() as $e)
@@ -22,7 +22,11 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-12 p-3 w-100 d-flex">
-                                <img src="{{ asset('storage/profile_image/' .$user->profile_image) }}" class="rounded-circle" width="50" height="50">
+                                @if($user->profile_image == null)
+                                <img src="/images/noimage.png" class="rounded-circle" width="50" height="50" alt="profile_image">
+                                @else
+                                <img src="{{ asset('storage/profile_image/' .$user->profile_image) }}" class="rounded-circle" width="50" height="50" alt="profile_image">
+                                @endif
                                 <div class="ml-2 d-flex flex-column">
                                     <p class="mb-0">{{ $user->name }}</p>
                                     <a href="{{ url('users/' .$user->id) }}" class="text-secondary">{{ $user->screen_name }}</a>
@@ -44,11 +48,11 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- コメント入力 -->
                         <div class="form-group">
                             <label for="text" class=" col-form-label text-md-right">{{ __('Text') }}</label>
-                            
+
                             <div class="">
                                 <textarea class="form-control @error('text') is-invalid @enderror" name="text" required autocomplete="text" rows="4">{{ old('text') ? : $anime->text  }}</textarea>
 
@@ -62,7 +66,7 @@
                                 <p class="mb-4 text-danger">200文字以内</p>
                             </div>
                         </div>
-                        
+
                         <!-- 状態 -->
                         <div class="form-group">
                             <label for="status" class=" col-form-label text-md-right">{{ __('Status') }}</label>
@@ -84,7 +88,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- おすすめ度 -->
                         <div class="form-group">
                             <label for="recommend" class=" col-form-label text-md-right">{{ __('Recommend') }}</label>
@@ -118,7 +122,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- アニメの画像 -->
                         <div class="form-group">
                             <label for="image" class="col-form-label text-md-right">{{ __('Image') }}</label>
@@ -130,7 +134,7 @@
                                 @else
                                 <img src="{{ asset('storage/animes/' .$anime->anime_image) }}" class="rounded-circle" width="80" height="80" alt="profile_image">
                                 @endif
-                                
+
                                 <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
 
                                 @error('address')
